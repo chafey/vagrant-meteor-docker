@@ -18,16 +18,14 @@ Vagrant.configure("2") do |config|
   # use ubuntu 1604
   config.vm.box = "geerlingguy/ubuntu1604"
 
-  # forward port 8000 which is used by gatsby
+  # forward port 8000 (used by meteor) and 8000 (for other purposes)
   config.vm.network "forwarded_port", guest: 3000, host: 3000
+  config.vm.network "forwarded_port", guest: 8000, host: 8000
 
   # sync folder with rsync to one way sync source code in host to guest so we can use an editor running on the host.  Note that
   # rsync__args are the default EXCEPT for the --delete argument which would delete the node_modules directory
   config.vm.synced_folder "src", "/home/vagrant/src", type: "rsync", rsync__args: ["--verbose", "--archive", "-z", "--copy-links"],
     rsync__exclude: "node_modules/"
-
-  # provision docker
-  config.vm.provision :docker
 
   # provision meteor
   config.vm.provision "shell", path: "bootstrap.sh"
