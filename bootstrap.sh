@@ -62,5 +62,7 @@ apt-get update
 apt-get install -y docker-ce
 ### end install docker-ce
 
+apt-get install -y docker-compose
+
 # add vagrant user to docker group so it can access docker daemon 
 usermod -a -G docker vagrant
